@@ -20,6 +20,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText input_email, input_password;
     Button btn_login;
     TextView link_signup;
+    LoginDataBaseAdapter login;
     Context context;
 
     @Override
@@ -35,13 +36,13 @@ public class LoginActivity extends AppCompatActivity {
 //
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-//        context = this.getApplicationContext();
+        context = this.getApplicationContext();
 //        input_email = (EditText) findViewById(R.id.input_email);
 //        input_password = (EditText) findViewById(R.id.input_password);
-//        btn_login = (Button) findViewById(R.id.btn_login);
+        btn_login = (Button) findViewById(R.id.btn_login);
         link_signup = (TextView) findViewById(R.id.link_signup);
 
-        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        //this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         // Set OnClick Listener on SignUp button
         link_signup.setOnClickListener(new View.OnClickListener() {
@@ -50,50 +51,49 @@ public class LoginActivity extends AppCompatActivity {
 
                 /// Create Intent for SignUpActivity  abd Start The Activity
                 startActivity(new Intent(v.getContext(), SignupActivity.class));
-                finish();
+                //finish();
 
             }
         });
 
-//
-//        // Set On ClickListener*/
-//        btn_login.setOnClickListener(new View.OnClickListener() {
-//
-//            public void onClick(View v) {
-//                // get The User name and Password
-//                String email=input_email.getText().toString();
-//                String password=input_password.getText().toString();
-//
-//                // fetch the Password form database for respective user name
-//                String storedPassword= null;
-//                try {
-//                    storedPassword = loginDataBaseAdapter.getSinlgeEntry(email);
-//                } catch (ExecutionException e) {
-//                    e.printStackTrace();
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                // check if the Stored password matches with  Password entered by user
-//                if(password.equals(storedPassword))
-//                {
+
+        // Set On ClickListener*/
+        btn_login.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                // get The User name and Password
+                String email=input_email.getText().toString();
+                String password=input_password.getText().toString();
+
+                // fetch the Password form database for respective user name
+                String storedPassword= null;
+                try {
+                    storedPassword = login.getSinlgeEntry(email);
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                // check if the Stored password matches with  Password entered by user
+                if(password.equals(storedPassword))
+                {
 //                    SharedPreferences settings = getSharedPreferences(MainActivity.PREFS_NAME, 0); // 0 - for private mode
 //                    SharedPreferences.Editor editor = settings.edit();
 //                    editor.putBoolean("hasLoggedIn", true);
 //                    editor.putString("loginName",email.substring(0, email.indexOf("@")));
 //                    editor.commit();
-//
-//
-//                    Intent intent = new Intent(getBaseContext(), MainActivity.class);
-//                    startActivity(intent);
-//                    finish();
-//                }
-//                else
-//                {
-//                    Toast.makeText(LoginActivity.this, "Email or Password does not match", Toast.LENGTH_LONG).show();
-//                }
-//            }
-//        });
+
+                    Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else
+                {
+                    Toast.makeText(LoginActivity.this, "Email or Password does not match", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
     }
 }
