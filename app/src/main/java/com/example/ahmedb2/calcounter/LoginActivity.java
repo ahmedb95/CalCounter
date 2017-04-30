@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -37,8 +38,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         context = this.getApplicationContext();
-//        input_email = (EditText) findViewById(R.id.input_email);
-//        input_password = (EditText) findViewById(R.id.input_password);
+        input_email = (EditText) findViewById(R.id.input_email);
+        input_password = (EditText) findViewById(R.id.input_password);
         btn_login = (Button) findViewById(R.id.btn_login);
         link_signup = (TextView) findViewById(R.id.link_signup);
 
@@ -62,13 +63,17 @@ public class LoginActivity extends AppCompatActivity {
 
             public void onClick(View v) {
                 // get The User name and Password
-                String email=input_email.getText().toString();
+                String username=input_email.getText().toString();
                 String password=input_password.getText().toString();
+                String storedPassword;
 
                 // fetch the Password form database for respective user name
-                String storedPassword= null;
+                storedPassword= "";
                 try {
-                    storedPassword = login.getSinlgeEntry(email);
+                    BackgroundWorker backgroundWorker = new BackgroundWorker(context);
+                    storedPassword = backgroundWorker.execute("user_login", username).get();
+                    storedPassword = storedPassword.substring(18);
+                    Log.d("passwordsn", storedPassword);
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {

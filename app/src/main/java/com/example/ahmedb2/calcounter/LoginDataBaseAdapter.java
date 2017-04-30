@@ -23,15 +23,14 @@ public class LoginDataBaseAdapter {
     // Context of the application using the database.
     private final Context context;
     // Database open/upgrade helper
-    private LoginDataBaseHelper dbHelper;
+    //private LoginDataBaseHelper dbHelper;
     public  LoginDataBaseAdapter(Context _context)
     {
         context = _context;
-        dbHelper = new LoginDataBaseHelper(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
     public LoginDataBaseAdapter open() throws SQLException
     {
-        db = dbHelper.getWritableDatabase();
+        //db = dbHelper.getWritableDatabase();
         return this;
     }
     public void close()
@@ -49,11 +48,6 @@ public class LoginDataBaseAdapter {
         BackgroundWorker backgroundWorker = new BackgroundWorker(context);
         backgroundWorker.execute("user_signup", name, userName, password);
 
-
-
-
-
-
         /*ContentValues newValues = new ContentValues();
         // Assign values for each row.
         newValues.put("USERNAME", userName);
@@ -63,18 +57,12 @@ public class LoginDataBaseAdapter {
         db.insert("LOGIN", null, newValues);
         ///Toast.makeText(context, "Reminder Is Successfully Saved", Toast.LENGTH_LONG).show();*/
     }
-    public int deleteEntry(String UserName)
-    {
-        //String id=String.valueOf(ID);
-        String where="USERNAME=?";
-        int numberOFEntriesDeleted= db.delete("LOGIN", where, new String[]{UserName}) ;
-        // Toast.makeText(context, "Number fo Entry Deleted Successfully : "+numberOFEntriesDeleted, Toast.LENGTH_LONG).show();
-        return numberOFEntriesDeleted;
-    }
+
     public String getSinlgeEntry(String userName) throws ExecutionException, InterruptedException {
         String password = "";
+        Log.d("password", password + "  " + userName);
         BackgroundWorker backgroundWorker = new BackgroundWorker(context);
-        password = backgroundWorker.execute("getPassword", userName).get();
+        password = backgroundWorker.execute("user_login", userName).get();
         Log.d("password", password + "  " + userName);
 
         password = password.substring(18);
@@ -91,15 +79,5 @@ public class LoginDataBaseAdapter {
         cursor.close();
         return password;*/
     }
-    public void  updateEntry(String userName,String password)
-    {
-        // Define the updated row content.
-        ContentValues updatedValues = new ContentValues();
-        // Assign values for each row.
-        updatedValues.put("USERNAME", userName);
-        updatedValues.put("PASSWORD",password);
 
-        String where="USERNAME = ?";
-        db.update("LOGIN",updatedValues, where, new String[]{userName});
-    }
 }
