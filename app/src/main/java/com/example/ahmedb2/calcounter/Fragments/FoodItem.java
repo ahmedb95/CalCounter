@@ -1,5 +1,6 @@
 package com.example.ahmedb2.calcounter.Fragments;
 
+import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.LayoutInflaterCompat;
@@ -11,7 +12,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.ahmedb2.calcounter.Activities.MainActivity;
 import com.example.ahmedb2.calcounter.R;
+import com.example.ahmedb2.calcounter.Utils.BackgroundWorker;
 
 public class FoodItem extends Fragment {
     EditText food_name, food_calories, food_eaten, food_amount;
@@ -19,6 +22,10 @@ public class FoodItem extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        SharedPreferences settings = getActivity().getSharedPreferences(MainActivity.PREFS_NAME, 0);
+        final String username = settings.getString("loginName", "null");
+
         View view = inflater.inflate(R.layout.activity_food_item, container, false);
         food_name = (EditText) view.findViewById(R.id.food_name);
         food_calories = (EditText) view.findViewById(R.id.food_calories);
@@ -30,6 +37,9 @@ public class FoodItem extends Fragment {
                 String calories = food_calories.getText().toString();
                 //submit to database
 
+                BackgroundWorker backgroundWorker = new BackgroundWorker(getContext());
+                backgroundWorker.execute("insert_food_item", name, calories);
+
             }
         });
         food_eaten = (EditText) view.findViewById(R.id.food_eaten);
@@ -39,8 +49,11 @@ public class FoodItem extends Fragment {
             @Override
             public void onClick(View v) {
                 String name = food_eaten.getText().toString();
-                String calories = food_amount.getText().toString();
+                String amount = food_amount.getText().toString();
                 //submit to database
+
+                BackgroundWorker backgroundWorker = new BackgroundWorker(getContext());
+                backgroundWorker.execute("insert_consumes", username, name, amount);
 
             }
         });

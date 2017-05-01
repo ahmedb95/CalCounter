@@ -2,6 +2,7 @@ package com.example.ahmedb2.calcounter.Activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,17 +26,20 @@ public class LoginActivity extends AppCompatActivity {
     LoginDataBaseAdapter login;
     Context context;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        SharedPreferences settings = getSharedPreferences(MainActivity.PREFS_NAME, 0);
-//        boolean hasLoggedIn = settings.getBoolean("hasLoggedIn", false);
-//
-//        if(hasLoggedIn){
-//            Intent intent = new Intent(getBaseContext(), MainActivity.class);
-//            startActivity(intent);
-//            finish();
-//        }
-//
+
+
+        SharedPreferences settings = getSharedPreferences(MainActivity.PREFS_NAME, 0);
+        boolean hasLoggedIn = settings.getBoolean("hasLoggedIn", false);
+
+        if(hasLoggedIn){
+            Intent intent = new Intent(getBaseContext(), InputActivity.class);
+            startActivity(intent);
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         context = this.getApplicationContext();
@@ -90,6 +94,11 @@ public class LoginActivity extends AppCompatActivity {
 //                    editor.putString("loginName",email.substring(0, email.indexOf("@")));
 //                    editor.commit();
 
+                    SharedPreferences.Editor editor = getSharedPreferences(MainActivity.PREFS_NAME, 0).edit();
+
+                    editor.putString("loginName", username);
+                    editor.putBoolean("hasLoggedIn", true);
+                    editor.commit();
                     Intent intent = new Intent(getBaseContext(), InputActivity.class);
                     startActivity(intent);
                     finish();
