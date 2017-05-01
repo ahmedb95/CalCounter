@@ -1,4 +1,4 @@
-package com.example.ahmedb2.calcounter;
+package com.example.ahmedb2.calcounter.Activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +13,9 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.example.ahmedb2.calcounter.Utils.BackgroundWorker;
+import com.example.ahmedb2.calcounter.R;
 
 import java.util.ArrayList;
 import java.util.List;

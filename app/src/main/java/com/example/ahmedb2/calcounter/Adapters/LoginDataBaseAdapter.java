@@ -1,11 +1,12 @@
-package com.example.ahmedb2.calcounter;
+package com.example.ahmedb2.calcounter.Adapters;
 
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+
+import com.example.ahmedb2.calcounter.Utils.BackgroundWorker;
 
 import java.util.concurrent.ExecutionException;
 

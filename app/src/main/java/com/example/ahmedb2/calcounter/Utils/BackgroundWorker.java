@@ -1,4 +1,4 @@
-package com.example.ahmedb2.calcounter;
+package com.example.ahmedb2.calcounter.Utils;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -26,7 +26,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
     Context context;
     Handler handler;
 
-    BackgroundWorker (Context ctx) {
+    public BackgroundWorker(Context ctx) {
         context = ctx;
     }
 
