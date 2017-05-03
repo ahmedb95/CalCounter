@@ -77,8 +77,9 @@ public class LoginActivity extends AppCompatActivity {
                 try {
                     BackgroundWorker backgroundWorker = new BackgroundWorker(context);
                     storedPassword = backgroundWorker.execute("user_login", username).get();
-                    storedPassword = storedPassword.substring(18);
                     Log.d("passwordsn", storedPassword);
+                    storedPassword = storedPassword.substring(18);
+
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {

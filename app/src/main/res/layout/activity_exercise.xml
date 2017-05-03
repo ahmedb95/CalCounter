@@ -147,7 +147,7 @@
                             android:layout_height="wrap_content"
                             app:hintEnabled="false">
 
-                            <EditText android:id="@+id/exercise_completed"
+                            <Spinner android:id="@+id/exercise_completed"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="#f9f9f9"

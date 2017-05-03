@@ -148,7 +148,7 @@
                             android:layout_height="wrap_content"
                             app:hintEnabled="false">
 
-                            <EditText android:id="@+id/food_eaten"
+                            <Spinner android:id="@+id/food_eaten"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="#f9f9f9"

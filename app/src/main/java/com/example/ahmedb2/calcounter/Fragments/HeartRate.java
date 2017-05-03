@@ -1,5 +1,6 @@
 package com.example.ahmedb2.calcounter.Fragments;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.ahmedb2.calcounter.Activities.ExerciseLogActivity;
+import com.example.ahmedb2.calcounter.Activities.HeartRateLogActivity;
 import com.example.ahmedb2.calcounter.Activities.MainActivity;
 import com.example.ahmedb2.calcounter.R;
 import com.example.ahmedb2.calcounter.Utils.BackgroundWorker;
@@ -35,6 +38,7 @@ public class HeartRate extends Fragment {
 
                 BackgroundWorker backgroundWorker = new BackgroundWorker(getContext());
                 backgroundWorker.execute("insert_heart_rate", username, rate);
+                heart_rate.setText("");
 
             }
         });
@@ -43,6 +47,8 @@ public class HeartRate extends Fragment {
             @Override
             public void onClick(View v) {
                 //View Log or Heart Rate
+                Intent i = new Intent(getActivity(), HeartRateLogActivity.class);
+                startActivity(i);
             }
         });
         return  view;
