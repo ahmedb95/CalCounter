@@ -9,4 +9,7 @@
     <string name="title_activity_inputs">inputs</string>
     <string name="section_format">Hello World from section: %1$d</string>
 
+    <string name="delete_button">Delete</string>
+    <string name="edit_button">Edit</string>
+
 </resources>

@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 
@@ -20,6 +21,7 @@ public class HeartRateLogActivity extends AppCompatActivity {
     String username;
     private ListView listview;
     ArrayAdapter<String> adapter;
+    Button delete_exercise, edit_exercise;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +29,7 @@ public class HeartRateLogActivity extends AppCompatActivity {
         setContentView(R.layout.activity_heart_rate_log);
 
         listview = (ListView) findViewById(R.id.heartRateLogListView);
+
 
         try {
             loadActivity();
