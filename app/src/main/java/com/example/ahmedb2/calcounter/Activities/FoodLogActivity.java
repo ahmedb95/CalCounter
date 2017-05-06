@@ -34,20 +34,6 @@ public class FoodLogActivity extends AppCompatActivity {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                delete = (Button) view.findViewById(R.id.delete);
-                edit = (Button) view.findViewById(R.id.edit);
-                delete.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //delete from database
-                    }
-                });
-                edit.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //delete from database
-                    }
-                });
             }
         });
 
