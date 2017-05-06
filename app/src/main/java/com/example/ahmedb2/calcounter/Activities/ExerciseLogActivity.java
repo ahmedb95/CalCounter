@@ -62,11 +62,13 @@ public class ExerciseLogActivity extends AppCompatActivity {
 
                         String[] entry = adapter.getItem(pos).toString().split("\n");
                         String time = entry[0].split(": ")[1];
-                        String name = entry[1].split(": ")[1].replaceAll(" ", "");
+                        String name = entry[1].split(": ")[1];
                         String cals = entry[2].split(": ")[1].replaceAll(" ", "");
 
                         BackgroundWorker backgroundWorker = new BackgroundWorker(getApplicationContext());
                         backgroundWorker.execute("update_exercise", username, time, name, dur);
+
+                        onBackPressed();
                         //edit query
                         dialog.dismiss();
                     }
@@ -82,12 +84,13 @@ public class ExerciseLogActivity extends AppCompatActivity {
 
                 String[] entry = adapter.getItem(i).toString().split("\n");
                 String time = entry[0].split(": ")[1];
-                String name = entry[1].split(": ")[1].replaceAll(" ", "");
+                String name = entry[1].split(": ")[1];
                 String cals = entry[2].split(": ")[1].replaceAll(" ", "");
                 Log.d("yolo", time + ":" + name + ":");
 
                 BackgroundWorker backgroundWorker = new BackgroundWorker(getApplicationContext());
                 backgroundWorker.execute("delete_exercise", username, time, name);
+                onBackPressed();
                 return true;
             }
         });

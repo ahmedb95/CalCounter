@@ -786,6 +786,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 while ((line = bufferedReader.readLine()) != null) {
                     result += line;
                 }
+                Log.d("yolo", result);
                 bufferedReader.close();
                 inputStream.close();
                 httpURLConnection.disconnect();
@@ -824,6 +825,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 while ((line = bufferedReader.readLine()) != null) {
                     result += line;
                 }
+                Log.d("yolo", result);
                 bufferedReader.close();
                 inputStream.close();
                 httpURLConnection.disconnect();
