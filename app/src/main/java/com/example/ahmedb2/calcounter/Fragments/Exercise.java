@@ -17,6 +17,7 @@ import android.widget.Spinner;
 import com.example.ahmedb2.calcounter.Activities.ExerciseLogActivity;
 import com.example.ahmedb2.calcounter.Activities.FoodLogActivity;
 import com.example.ahmedb2.calcounter.Activities.MainActivity;
+import com.example.ahmedb2.calcounter.Adapters.MyFragmentPagerAdapter;
 import com.example.ahmedb2.calcounter.R;
 import com.example.ahmedb2.calcounter.Utils.BackgroundWorker;
 
@@ -33,7 +34,7 @@ public class Exercise extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_exercise, container, false);
+        final View view = inflater.inflate(R.layout.activity_exercise, container, false);
 
         SharedPreferences settings = getActivity().getSharedPreferences(MainActivity.PREFS_NAME, 0);
         username = settings.getString("loginName", "null");
@@ -50,9 +51,10 @@ public class Exercise extends Fragment {
                 //submit to database
 
                 BackgroundWorker backgroundWorker = new BackgroundWorker(getContext());
-                backgroundWorker.execute("insert_exercise", name, calories);
+                backgroundWorker.execute("insert_exercise", name, calories, username);
                 exercise_name.setText("");
                 exercise_calories.setText("");
+
 
             }
         });

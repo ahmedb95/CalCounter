@@ -63,7 +63,7 @@ public class HeartRateLogActivity extends AppCompatActivity {
             }
         }
 
-        adapter = new ArrayAdapter<String>(this, R.layout.text_list, list);
+        adapter = new ArrayAdapter<String>(this, R.layout.text_list, R.id.content, list);
         listview.setAdapter(adapter);
     }
 }

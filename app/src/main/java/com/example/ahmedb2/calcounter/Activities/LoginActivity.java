@@ -35,10 +35,10 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences settings = getSharedPreferences(MainActivity.PREFS_NAME, 0);
         boolean hasLoggedIn = settings.getBoolean("hasLoggedIn", false);
 
-        if(hasLoggedIn){
-            Intent intent = new Intent(getBaseContext(), InputActivity.class);
-            startActivity(intent);
-        }
+//        if(hasLoggedIn){
+//            Intent intent = new Intent(getBaseContext(), InputActivity.class);
+//            startActivity(intent);
+//        }
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);

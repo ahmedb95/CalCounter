@@ -28,6 +28,7 @@ import java.util.concurrent.ExecutionException;
 public class Daily extends Fragment {
     TextView total_food_calories, total_exercise_calories, total_daily_calories;
     String username;
+    String daily_performs, daily_consumes;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -36,9 +37,40 @@ public class Daily extends Fragment {
         SharedPreferences settings = getActivity().getSharedPreferences(MainActivity.PREFS_NAME, 0);
         username = settings.getString("loginName", "null");
 
+
+
         total_food_calories = (TextView) view.findViewById(R.id.total_food_calories);
         total_exercise_calories = (TextView) view.findViewById(R.id.total_exercise_calories);
         total_daily_calories = (TextView) view.findViewById(R.id.total_daily_calories);
+
+        BackgroundWorker backgroundWorker = new BackgroundWorker(getContext());
+        try {
+            daily_performs = backgroundWorker.execute("get_daily_performs", username).get();
+            daily_performs = daily_performs.substring(18);
+            total_exercise_calories.setText("Total Exercise Calories: " + daily_performs);
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        backgroundWorker= new BackgroundWorker(getContext());
+        try {
+            daily_consumes = backgroundWorker.execute("get_daily_consumes", username).get();
+            daily_consumes = daily_consumes.substring(18);
+            total_food_calories.setText("Total Food Calories: " + daily_consumes);
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        if(!daily_performs.equals("") && !daily_consumes.equals("")) {
+            int total = Integer.parseInt(daily_consumes)-Integer.parseInt(daily_performs);
+            total_daily_calories.setText("Total Daily Calories: " + total);
+        }
 
         return  view;
 

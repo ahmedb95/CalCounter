@@ -51,7 +51,7 @@ public class FoodItem extends Fragment {
                 //submit to database
 
                 BackgroundWorker backgroundWorker = new BackgroundWorker(getContext());
-                backgroundWorker.execute("insert_food_item", name, calories);
+                backgroundWorker.execute("insert_food_item", name, calories, username);
                 food_name.setText("");
                 food_calories.setText("");
 

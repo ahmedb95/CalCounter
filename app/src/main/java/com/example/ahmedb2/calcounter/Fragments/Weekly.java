@@ -28,6 +28,7 @@ import java.util.concurrent.ExecutionException;
 public class Weekly extends Fragment {
     TextView total_w_food_calories, total_w_exercise_calories, total_weekly_calories;
     String username;
+    String weekly_performs, weekly_consumes;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,6 +40,36 @@ public class Weekly extends Fragment {
         total_w_food_calories = (TextView) view.findViewById(R.id.total_w_food_calories);
         total_w_exercise_calories = (TextView) view.findViewById(R.id.total_w_exercise_calories);
         total_weekly_calories = (TextView) view.findViewById(R.id.total_weekly_calories);
+
+        BackgroundWorker backgroundWorker = new BackgroundWorker(getContext());
+        try {
+            weekly_performs = backgroundWorker.execute("get_weekly_performs", username).get();
+            weekly_performs = weekly_performs.substring(18);
+            total_w_exercise_calories.setText("Total Exercise Calories: " + weekly_performs);
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        backgroundWorker= new BackgroundWorker(getContext());
+        try {
+            weekly_consumes = backgroundWorker.execute("get_weekly_consumes", username).get();
+            weekly_consumes = weekly_consumes.substring(18);
+            total_w_food_calories.setText("Total Food Calories: " + weekly_consumes);
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        if(!weekly_performs.equals("") && !weekly_consumes.equals("")) {
+            int total = Integer.parseInt(weekly_consumes)-Integer.parseInt(weekly_performs);
+            total_weekly_calories.setText("Total weekly Calories: " + total);
+        }
+
 
         return  view;
 

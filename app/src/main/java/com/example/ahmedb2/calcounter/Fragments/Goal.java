@@ -47,7 +47,7 @@ public class Goal extends Fragment {
                 //submit to database
 
                 BackgroundWorker backgroundWorker = new BackgroundWorker(getContext());
-                backgroundWorker.execute("insert_daily_goals", goal_name);
+                backgroundWorker.execute("insert_daily_goals", goal_name, username);
                 goal_description.setText("");
             }});
         goal_completed = (Spinner) view.findViewById(R.id.goal_completed);

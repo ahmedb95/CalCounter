@@ -44,12 +44,16 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
         String insert_heart_rate_url = "http://jasmine.cs.vcu.edu:20038/~ahmedb2/insert_heart_rate.php";
         String insert_performs_url = "http://jasmine.cs.vcu.edu:20038/~ahmedb2/insert_performs.php";
         String get_exercise_url = "http://jasmine.cs.vcu.edu:20038/~ahmedb2/get_exercise.php";
-        String get_exercise_log_url = "http://jasmine.cs.vcu.edu:20038/~ahmedb2/get_exercise_log.php";
+        String get_exercise_log_url = "http://jasmine.cs.vcu.edu:20038/~ahmedb2/user_performs.php";
         String get_foods_url = "http://jasmine.cs.vcu.edu:20038/~ahmedb2/get_foods.php";
-        String get_food_log_url = "http://jasmine.cs.vcu.edu:20038/~ahmedb2/get_food_log.php";
+        String get_food_log_url = "http://jasmine.cs.vcu.edu:20038/~ahmedb2/user_consumes.php";
         String get_heart_rate_url = "http://jasmine.cs.vcu.edu:20038/~ahmedb2/get_heart_rate_log.php";
         String get_goal_url = "http://jasmine.cs.vcu.edu:20038/~ahmedb2/get_goals.php";
-        String get_goal_log_url = "http://jasmine.cs.vcu.edu:20038/~ahmedb2/get_goal_log.php";
+        String get_goal_log_url = "http://jasmine.cs.vcu.edu:20038/~ahmedb2/user_completes.php";
+        String get_daily_consumes_url = "http://jasmine.cs.vcu.edu:20038/~ahmedb2/daily_consumes.php";
+        String get_daily_performs_url = "http://jasmine.cs.vcu.edu:20038/~ahmedb2/daily_performs.php";
+        String get_weekly_consumes_url = "http://jasmine.cs.vcu.edu:20038/~ahmedb2/weekly_consumes.php";
+        String get_weekly_performs_url = "http://jasmine.cs.vcu.edu:20038/~ahmedb2/weekly_performs.php";
 
 
         if(type.equals("user_login")) {
@@ -195,6 +199,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 while ((line = bufferedReader.readLine()) != null) {
                     result += line;
                 }
+                Log.d("lookResult", result);
                 bufferedReader.close();
                 inputStream.close();
                 httpURLConnection.disconnect();
@@ -208,6 +213,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
             try {
                 URL url = new URL(insert_daily_goals_url);
                 String goal = params[1];
+                String username = params[2];
 
                 HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
@@ -215,7 +221,8 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 httpURLConnection.setDoInput(true);
                 OutputStream outputStream = httpURLConnection.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-                String post_data = URLEncoder.encode("goal", "UTF-8") + "=" + URLEncoder.encode(goal, "UTF-8");
+                String post_data = URLEncoder.encode("goal", "UTF-8") + "=" + URLEncoder.encode(goal, "UTF-8") + "&"
+                                 + URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8");
                 bufferedWriter.write(post_data);
                 bufferedWriter.flush();
                 bufferedWriter.close();
@@ -242,6 +249,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 URL url = new URL(insert_exercise_url);
                 String exercise_name = params[1];
                 String calories = params[2];
+                String username = params[3];
 
                 HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
@@ -250,7 +258,8 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 OutputStream outputStream = httpURLConnection.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
                 String post_data = URLEncoder.encode("exercise_name", "UTF-8") + "=" + URLEncoder.encode(exercise_name, "UTF-8") + "&"
-                        + URLEncoder.encode("calories", "UTF-8") + "=" + URLEncoder.encode(calories, "UTF-8");
+                        + URLEncoder.encode("calories", "UTF-8") + "=" + URLEncoder.encode(calories, "UTF-8") + "&"
+                        + URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8");
                 bufferedWriter.write(post_data);
                 bufferedWriter.flush();
                 bufferedWriter.close();
@@ -277,6 +286,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 URL url = new URL(insert_food_item_url);
                 String food_name = params[1];
                 String calories = params[2];
+                String username = params[3];
 
                 HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
@@ -285,7 +295,8 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
                 OutputStream outputStream = httpURLConnection.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
                 String post_data = URLEncoder.encode("food_name", "UTF-8") + "=" + URLEncoder.encode(food_name, "UTF-8") + "&"
-                        + URLEncoder.encode("calories", "UTF-8") + "=" + URLEncoder.encode(calories, "UTF-8");
+                        + URLEncoder.encode("calories", "UTF-8") + "=" + URLEncoder.encode(calories, "UTF-8") + "&"
+                        + URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8");
                 bufferedWriter.write(post_data);
                 bufferedWriter.flush();
                 bufferedWriter.close();
@@ -580,6 +591,138 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
         } else if(type.equals("get_heart_rate")) {
             try {
                 URL url = new URL(get_heart_rate_url);
+                String username = params[1];
+
+                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                String post_data = URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8");
+                bufferedWriter.write(post_data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
+                String result = "";
+                String line = "";
+
+                while ((line = bufferedReader.readLine()) != null) {
+                    result += line;
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return result;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else if(type.equals("get_daily_consumes")) {
+            try {
+                URL url = new URL(get_daily_consumes_url);
+                String username = params[1];
+
+                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                String post_data = URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8");
+                bufferedWriter.write(post_data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
+                String result = "";
+                String line = "";
+
+                while ((line = bufferedReader.readLine()) != null) {
+                    result += line;
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return result;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else if(type.equals("get_daily_performs")) {
+            try {
+                URL url = new URL(get_daily_performs_url);
+                String username = params[1];
+
+                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                String post_data = URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8");
+                bufferedWriter.write(post_data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
+                String result = "";
+                String line = "";
+
+                while ((line = bufferedReader.readLine()) != null) {
+                    result += line;
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return result;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else if(type.equals("get_weekly_consumes")) {
+            try {
+                URL url = new URL(get_weekly_consumes_url);
+                String username = params[1];
+
+                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                String post_data = URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8");
+                bufferedWriter.write(post_data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
+                String result = "";
+                String line = "";
+
+                while ((line = bufferedReader.readLine()) != null) {
+                    result += line;
+                }
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return result;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else if(type.equals("get_weekly_performs")) {
+            try {
+                URL url = new URL(get_weekly_performs_url);
                 String username = params[1];
 
                 HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
