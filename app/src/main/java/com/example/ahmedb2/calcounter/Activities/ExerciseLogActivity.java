@@ -1,14 +1,24 @@
 package com.example.ahmedb2.calcounter.Activities;
 
+import android.app.Dialog;
 import android.content.SharedPreferences;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
 import com.example.ahmedb2.calcounter.R;
@@ -33,21 +43,28 @@ public class ExerciseLogActivity extends AppCompatActivity {
         listview = (ListView) findViewById(R.id.exerciseLogListView);
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                delete = (Button) view.findViewById(R.id.delete);
-                edit = (Button) view.findViewById(R.id.edit);
-                delete.setOnClickListener(new View.OnClickListener() {
+            public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
+                final Dialog dialog = new Dialog(ExerciseLogActivity.this);
+                dialog.setContentView(R.layout.excercise_dialog);
+                dialog.show();
+                Button submit = (Button) dialog.findViewById(R.id.exercise_dialog_s);
+                submit.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
-                        //delete from database
+                    public void onClick(View view) {
+                        EditText dialog_dur = (EditText) dialog.findViewById(R.id.exercise_dialog_duration);
+                        String dur = dialog_dur.getText().toString();
+                        //edit query
+                        dialog.dismiss();
                     }
                 });
-                edit.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //delete from database
-                    }
-                });
+            }
+        });
+
+        listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                //Delete query here
+                return true;
             }
         });
 

@@ -2,6 +2,7 @@
 <RelativeLayout
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
+    android:descendantFocusability="blocksDescendants"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <TextView
         android:id="@+id/content"
@@ -9,17 +10,4 @@
         android:layout_height="match_parent"
         android:padding="10dp">
     </TextView>
-    <Button
-    android:id="@+id/edit"
-    android:layout_width="96dp"
-    android:layout_height="wrap_content"
-    android:layout_alignParentRight="true"
-    android:text="@string/edit_button" />
-    <Button
-        android:id="@+id/delete"
-        android:layout_width="96dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/edit"
-        android:text="@string/delete_button" />
 </RelativeLayout>
