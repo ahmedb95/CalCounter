@@ -34,17 +34,22 @@ public class ExerciseLogActivity extends AppCompatActivity {
     private ListView listview;
     ArrayAdapter<String> adapter;
     Button delete, edit;
+    int pos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise_log);
 
+        SharedPreferences settings = getSharedPreferences(MainActivity.PREFS_NAME, 0);
+        username = settings.getString("loginName", "null");
+
         listview = (ListView) findViewById(R.id.exerciseLogListView);
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
                 final Dialog dialog = new Dialog(ExerciseLogActivity.this);
+                pos = position;
                 dialog.setContentView(R.layout.excercise_dialog);
                 dialog.show();
                 Button submit = (Button) dialog.findViewById(R.id.exercise_dialog_s);
@@ -53,6 +58,15 @@ public class ExerciseLogActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         EditText dialog_dur = (EditText) dialog.findViewById(R.id.exercise_dialog_duration);
                         String dur = dialog_dur.getText().toString();
+                        String text = adapter.getItem(pos).toString();
+
+                        String[] entry = adapter.getItem(pos).toString().split("\n");
+                        String time = entry[0].split(": ")[1];
+                        String name = entry[1].split(": ")[1].replaceAll(" ", "");
+                        String cals = entry[2].split(": ")[1].replaceAll(" ", "");
+
+                        BackgroundWorker backgroundWorker = new BackgroundWorker(getApplicationContext());
+                        backgroundWorker.execute("update_exercise", username, time, name, dur);
                         //edit query
                         dialog.dismiss();
                     }
@@ -64,6 +78,16 @@ public class ExerciseLogActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //Delete query here
+                String text = adapter.getItem(i).toString();
+
+                String[] entry = adapter.getItem(i).toString().split("\n");
+                String time = entry[0].split(": ")[1];
+                String name = entry[1].split(": ")[1].replaceAll(" ", "");
+                String cals = entry[2].split(": ")[1].replaceAll(" ", "");
+                Log.d("yolo", time + ":" + name + ":");
+
+                BackgroundWorker backgroundWorker = new BackgroundWorker(getApplicationContext());
+                backgroundWorker.execute("delete_exercise", username, time, name);
                 return true;
             }
         });

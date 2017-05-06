@@ -17,6 +17,8 @@ import android.widget.TextView;
 import com.example.ahmedb2.calcounter.Utils.BackgroundWorker;
 import com.example.ahmedb2.calcounter.R;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,6 +94,8 @@ public class SignupActivity extends AppCompatActivity {
                 String age_text = age.getSelectedItem().toString();
                 String gender_text = "";
 
+                password_text = md5(password_text);
+
                 int genderId = gender.getCheckedRadioButtonId();
 
                 if(genderId != -1){
@@ -109,5 +113,30 @@ public class SignupActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public static final String md5(final String s) {
+        final String MD5 = "MD5";
+        try {
+            // Create MD5 Hash
+            MessageDigest digest = java.security.MessageDigest
+                    .getInstance(MD5);
+            digest.update(s.getBytes());
+            byte messageDigest[] = digest.digest();
+
+            // Create Hex String
+            StringBuilder hexString = new StringBuilder();
+            for (byte aMessageDigest : messageDigest) {
+                String h = Integer.toHexString(0xFF & aMessageDigest);
+                while (h.length() < 2)
+                    h = "0" + h;
+                hexString.append(h);
+            }
+            return hexString.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }

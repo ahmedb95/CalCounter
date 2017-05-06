@@ -16,6 +16,8 @@ import com.example.ahmedb2.calcounter.Utils.BackgroundWorker;
 import com.example.ahmedb2.calcounter.Adapters.LoginDataBaseAdapter;
 import com.example.ahmedb2.calcounter.R;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.ExecutionException;
 
 public class LoginActivity extends AppCompatActivity {
@@ -31,7 +33,8 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-
+        //String md5Pass = md5("billy");
+        //Log.d("md5Pass", md5Pass);
         SharedPreferences settings = getSharedPreferences(MainActivity.PREFS_NAME, 0);
         boolean hasLoggedIn = settings.getBoolean("hasLoggedIn", false);
 
@@ -70,6 +73,7 @@ public class LoginActivity extends AppCompatActivity {
                 // get The User name and Password
                 String username=input_email.getText().toString();
                 String password=input_password.getText().toString();
+                password = md5(password);
                 String storedPassword;
 
                 // fetch the Password form database for respective user name
@@ -79,6 +83,28 @@ public class LoginActivity extends AppCompatActivity {
                     storedPassword = backgroundWorker.execute("user_login", username).get();
                     Log.d("passwordsn", storedPassword);
                     storedPassword = storedPassword.substring(18);
+                    // check if the Stored password matches with  Password entered by user
+                    if(password.equals(storedPassword))
+                    {
+//                    SharedPreferences settings = getSharedPreferences(MainActivity.PREFS_NAME, 0); // 0 - for private mode
+//                    SharedPreferences.Editor editor = settings.edit();
+//                    editor.putBoolean("hasLoggedIn", true);
+//                    editor.putString("loginName",email.substring(0, email.indexOf("@")));
+//                    editor.commit();
+
+                        SharedPreferences.Editor editor = getSharedPreferences(MainActivity.PREFS_NAME, 0).edit();
+
+                        editor.putString("loginName", username);
+                        editor.putBoolean("hasLoggedIn", true);
+                        editor.commit();
+                        Intent intent = new Intent(getBaseContext(), InputActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else
+                    {
+                        Toast.makeText(LoginActivity.this, "Email or Password does not match", Toast.LENGTH_LONG).show();
+                    }
 
                 } catch (ExecutionException e) {
                     e.printStackTrace();
@@ -86,30 +112,34 @@ public class LoginActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                // check if the Stored password matches with  Password entered by user
-                if(password.equals(storedPassword))
-                {
-//                    SharedPreferences settings = getSharedPreferences(MainActivity.PREFS_NAME, 0); // 0 - for private mode
-//                    SharedPreferences.Editor editor = settings.edit();
-//                    editor.putBoolean("hasLoggedIn", true);
-//                    editor.putString("loginName",email.substring(0, email.indexOf("@")));
-//                    editor.commit();
 
-                    SharedPreferences.Editor editor = getSharedPreferences(MainActivity.PREFS_NAME, 0).edit();
-
-                    editor.putString("loginName", username);
-                    editor.putBoolean("hasLoggedIn", true);
-                    editor.commit();
-                    Intent intent = new Intent(getBaseContext(), InputActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
-                else
-                {
-                    Toast.makeText(LoginActivity.this, "Email or Password does not match", Toast.LENGTH_LONG).show();
-                }
             }
         });
 
+    }
+
+    public static final String md5(final String s) {
+        final String MD5 = "MD5";
+        try {
+            // Create MD5 Hash
+            MessageDigest digest = java.security.MessageDigest
+                    .getInstance(MD5);
+            digest.update(s.getBytes());
+            byte messageDigest[] = digest.digest();
+
+            // Create Hex String
+            StringBuilder hexString = new StringBuilder();
+            for (byte aMessageDigest : messageDigest) {
+                String h = Integer.toHexString(0xFF & aMessageDigest);
+                while (h.length() < 2)
+                    h = "0" + h;
+                hexString.append(h);
+            }
+            return hexString.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }

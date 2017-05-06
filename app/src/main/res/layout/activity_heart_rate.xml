@@ -52,18 +52,19 @@
                             android:layout_height="wrap_content"
                             app:hintEnabled="false">
 
-                            <EditText android:id="@+id/heart_rate"
+                            <EditText
+                                android:id="@+id/heart_rate"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="#f9f9f9"
-                                android:textColor="#000"
-                                android:paddingTop="10dp"
-                                android:paddingLeft="5dp"
-                                android:paddingBottom="10dp"
-                                android:inputType="textNoSuggestions"
-                                android:textCursorDrawable="@null"
                                 android:cursorVisible="true"
-                                android:hint="HR" />
+                                android:hint="HR"
+                                android:inputType="number"
+                                android:paddingBottom="10dp"
+                                android:paddingLeft="5dp"
+                                android:paddingTop="10dp"
+                                android:textColor="#000"
+                                android:textCursorDrawable="@null" />
 
                         </android.support.design.widget.TextInputLayout>
 

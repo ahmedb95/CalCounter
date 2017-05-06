@@ -77,18 +77,18 @@
                                 app:hintEnabled="false">
 
                                 <EditText
-                                    android:id ="@+id/food_calories"
+                                    android:id="@+id/food_calories"
                                     android:layout_width="fill_parent"
                                     android:layout_height="wrap_content"
                                     android:background="#f9f9f9"
-                                    android:textColor="#000"
-                                    android:paddingTop="10dp"
-                                    android:paddingLeft="5dp"
-                                    android:paddingBottom="10dp"
-                                    android:inputType="textNoSuggestions"
-                                    android:textCursorDrawable="@null"
                                     android:cursorVisible="true"
-                                    android:hint="Calories" />
+                                    android:hint="Calories (Only 3 numbers)"
+                                    android:inputType="number"
+                                    android:paddingBottom="10dp"
+                                    android:paddingLeft="5dp"
+                                    android:paddingTop="10dp"
+                                    android:textColor="#000"
+                                    android:textCursorDrawable="@null" />
                             </android.support.design.widget.TextInputLayout>
 
 
@@ -171,18 +171,18 @@
                             app:hintEnabled="false">
 
                             <EditText
-                                android:id ="@+id/food_amount"
+                                android:id="@+id/food_amount"
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
                                 android:background="#f9f9f9"
-                                android:textColor="#000"
-                                android:paddingTop="10dp"
-                                android:paddingLeft="5dp"
-                                android:paddingBottom="10dp"
-                                android:inputType="textNoSuggestions"
-                                android:textCursorDrawable="@null"
                                 android:cursorVisible="true"
-                                android:hint="Amount in cups" />
+                                android:hint="Amount in cups(Only 3 Numbers)"
+                                android:inputType="number"
+                                android:paddingBottom="10dp"
+                                android:paddingLeft="5dp"
+                                android:paddingTop="10dp"
+                                android:textColor="#000"
+                                android:textCursorDrawable="@null" />
                         </android.support.design.widget.TextInputLayout>
 
 

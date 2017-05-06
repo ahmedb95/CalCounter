@@ -76,18 +76,18 @@
                         app:hintEnabled="false">
 
                         <EditText
-                            android:id ="@+id/exercise_calories"
+                            android:id="@+id/exercise_calories"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:background="#f9f9f9"
-                            android:textColor="#000"
-                            android:paddingTop="10dp"
-                            android:paddingLeft="5dp"
-                            android:paddingBottom="10dp"
-                            android:inputType="textNoSuggestions"
-                            android:textCursorDrawable="@null"
                             android:cursorVisible="true"
-                            android:hint="Calories per minute" />
+                            android:hint="Calories per minute (Only 3 Numbers)"
+                            android:inputType="number"
+                            android:paddingBottom="10dp"
+                            android:paddingLeft="5dp"
+                            android:paddingTop="10dp"
+                            android:textColor="#000"
+                            android:textCursorDrawable="@null" />
                     </android.support.design.widget.TextInputLayout>
 
 
@@ -170,18 +170,18 @@
                             app:hintEnabled="false">
 
                             <EditText
-                                android:id ="@+id/exercise_duration"
+                                android:id="@+id/exercise_duration"
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
                                 android:background="#f9f9f9"
-                                android:textColor="#000"
-                                android:paddingTop="10dp"
-                                android:paddingLeft="5dp"
-                                android:paddingBottom="10dp"
-                                android:inputType="textNoSuggestions"
-                                android:textCursorDrawable="@null"
                                 android:cursorVisible="true"
-                                android:hint="Duration in minutes" />
+                                android:hint=" "
+                                android:inputType="number"
+                                android:paddingBottom="10dp"
+                                android:paddingLeft="5dp"
+                                android:paddingTop="10dp"
+                                android:textColor="#000"
+                                android:textCursorDrawable="@null" />
                         </android.support.design.widget.TextInputLayout>
 
 
